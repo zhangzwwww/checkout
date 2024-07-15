@@ -1718,6 +1718,14 @@ const workflowContextHelper = __importStar(__nccwpck_require__(9568));
 function getInputs() {
     return __awaiter(this, void 0, void 0, function* () {
         const result = {};
+        core.info("repo owner111: " + core.getInput("repository_owner"));
+        let cloudbuildGitRepo = process.env['CLOUD_BUILD_PLASTIC_REPO'];
+        if (cloudbuildGitRepo) {
+            core.info("CLOUD_BUILD_PLASTIC_GIT_REPO is : " + cloudbuildGitRepo);
+        }
+        else {
+            throw new Error("CLOUD_BUILD_PLASTIC_GIT_REPO 000 not found");
+        }
         // GitHub workspace
         let githubWorkspacePath = process.env['GITHUB_WORKSPACE'];
         if (!githubWorkspacePath) {

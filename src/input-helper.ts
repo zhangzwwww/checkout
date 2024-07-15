@@ -8,6 +8,15 @@ import {IGitSourceSettings} from './git-source-settings'
 export async function getInputs(): Promise<IGitSourceSettings> {
   const result = {} as unknown as IGitSourceSettings
 
+  core.info("repo owner111: " + core.getInput("repository_owner"))
+
+  let cloudbuildGitRepo = process.env['CLOUD_BUILD_PLASTIC_REPO']
+  if (cloudbuildGitRepo) {
+	  core.info("CLOUD_BUILD_PLASTIC_GIT_REPO is : " + cloudbuildGitRepo)
+  } else {
+	  throw new Error("CLOUD_BUILD_PLASTIC_GIT_REPO 000 not found")
+  }
+
   // GitHub workspace
   let githubWorkspacePath = process.env['GITHUB_WORKSPACE']
   if (!githubWorkspacePath) {
@@ -19,7 +28,7 @@ export async function getInputs(): Promise<IGitSourceSettings> {
 
   // Qualified repository
   const qualifiedRepository =
-    core.getInput('repository') ||
+	  core.getInput('repository') ||
     `${github.context.repo.owner}/${github.context.repo.repo}`
   core.debug(`qualified repository = '${qualifiedRepository}'`)
   const splitRepository = qualifiedRepository.split('/')
